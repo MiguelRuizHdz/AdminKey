@@ -1,0 +1,7 @@
+{
+  "name": "adminkey-front",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
