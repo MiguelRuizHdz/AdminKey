@@ -1,0 +1,30 @@
+<div class="post">
+    <ion-item lines="none">
+
+        <ion-avatar slot="start">
+            <img src="/assets/imgs/{{ post.imagen }}" />
+        </ion-avatar>
+        <ion-label>{{ post.categoria.nombre }}</ion-label>
+        <ion-button fill="clear" (click)="lanzarMenu()">
+            <ion-icon slot="icon-only" name="information-circle"></ion-icon>
+        </ion-button>
+
+    </ion-item>
+    <ion-item>
+        <ion-label>
+            {{ post.cuenta }}
+        </ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-input id="pass" name="password" [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" value="{{ post.passSecure }}"></ion-input>
+        <ion-icon slot="end" [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
+        <ion-icon slot="end" name="copy" (click)="copy()"></ion-icon>
+    </ion-item>
+
+    <ion-item lines="none ">
+        <ion-label text-grap>
+            {{ post.descripcion }}
+        </ion-label>
+    </ion-item>
+
+</div>

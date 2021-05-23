@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            Mis contraseñas
+        </ion-title>
+    </ion-toolbar>
+    <ion-searchbar placeholder="Buscar por descripción" animated debounce="700" [value]="textoBuscar" (ionChange)="buscar( $event )"></ion-searchbar>
+
+    <ion-segment scrollable mode="md" color="primary" (ionChange)="cambioCategoria()">
+        <ion-segment-button mode="md" value="">
+            <ion-label text-capitalize>Todos</ion-label>
+        </ion-segment-button>
+        <ion-segment-button mode="md" *ngFor="let categoria of categorias" [value]="categoria._id">
+            <ion-label text-capitalize>{{ categoria.nombre }}</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <!-- Refresher -->
+    <ion-refresher slot="fixed" (ionRefresh)="recargar($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <!-- Spinner -->
+    <ion-grid fixed *ngIf="buscando">
+        <ion-row>
+            <ion-col class="ion-text-center">
+                <ion-spinner name="bubbles"></ion-spinner>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <!-- Posts -->
+    <app-posts [posts]="posts"></app-posts>
+
+    <!-- Infinite Scroll -->
+
+    <ion-infinite-scroll [disabled]="!habilitado" threshold="150px" (ionInfinite)="siguientes($event)">
+        <ion-infinite-scroll-content>
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+
+</ion-content>

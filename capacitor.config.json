@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "adminkey-front",
-	"webDir": "www",
-	"bundledWebRuntime": false
+    "appId": "io.ionic.starter",
+    "appName": "adminkey",
+    "webDir": "www",
+    "bundledWebRuntime": false
 }

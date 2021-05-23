@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            Crear nueva contraseña
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" fixed="fixed">
+    <ion-row class="top-20">
+        <ion-col size="12" class="ion-text-center">
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <ion-card>
+                <ion-item>
+                    <ion-label>Categoría</ion-label>
+                    <ion-select [(ngModel)]="postCrear.categoria">
+                        <ion-select-option *ngFor="let categoria of categorias" [value]="categoria._id">{{ categoria.nombre }}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+
+            <ion-card>
+                <ion-item>
+                    <ion-label>Imagen</ion-label>
+                    <ion-select cancelText="Cancelar" okText="Aceptar" [(ngModel)]="postCrear.imagen">
+                        <ion-select-option *ngFor="let imagen of imagenes" [value]="imagen.img">
+                            {{ imagen.name }}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+
+            <ion-card>
+                <ion-item>
+                    <ion-label>Cuenta: </ion-label>
+                    <ion-input name="email" type="email" placeholder="Correo" [(ngModel)]="postCrear.cuenta" required="required"></ion-input>
+                </ion-item>
+            </ion-card>
+
+            <ion-card>
+                <ion-item>
+                    <ion-label>Contraseña: </ion-label>
+
+                    <ion-input id="pass" name="password" [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" [(ngModel)]="postCrear.passSecure" required="required"></ion-input>
+                    <ion-icon slot="end" [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
+                    <ion-icon slot="end" name="copy" (click)="copy()"></ion-icon>
+                </ion-item>
+            </ion-card>
+
+            <ion-card>
+                <ion-item>
+                    <ion-label>Descripción: </ion-label>
+                    <ion-input name="descripcion" type="text" placeholder="Descripción" [(ngModel)]="postCrear.descripcion" required="required"></ion-input>
+                </ion-item>
+            </ion-card>
+            <ion-row>
+                <ion-col class="ion-text-center">
+                    <ion-button (click)="genPass()">
+                        <ion-icon slot="icon-only" name="key"></ion-icon>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+        </ion-col>
+    </ion-row>
+    <ion-row class="tp-50">
+        <ion-col class="ion-text-center">
+            <ion-button (click)="crearCuenta()" color="primary" shape="round">Crear contraseña</ion-button>
+        </ion-col>
+    </ion-row>
+</ion-content>
