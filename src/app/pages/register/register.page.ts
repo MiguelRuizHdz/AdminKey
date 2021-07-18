@@ -19,7 +19,7 @@ export class RegisterPage implements OnInit {
   });
 
   constructor( private fb: FormBuilder,
-               private usuarioSerice: UsuarioService ) { 
+               private usuarioSerice: UsuarioService ) {
     this.crearForm();
   }
 

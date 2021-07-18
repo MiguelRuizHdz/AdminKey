@@ -13,24 +13,24 @@ export class Tab1Page implements OnInit {
 
   @ViewChild(IonSegment, { static: true }) segment: IonSegment;
   @ViewChild(IonInfiniteScroll, {static: false}) infiniteScroll: IonInfiniteScroll;
-  
+
   posts: Post[] = [];
   categorias: Categoria[] = [];
   textoBuscar = '';
   buscando = false;
 
   habilitado = true;
-  constructor( private postService: PostsService, 
+  constructor( private postService: PostsService,
                private categoriaService: CategoriasService ) {}
 
   ngOnInit(){
     this.traerCategorias();
-    this.segment.value = "";
+    this.segment.value = '';
 
     this.siguientes(false);
     this.postService.nuevoPost.subscribe( post => {
       this.posts.unshift( post );
-    })
+    });
   }
 
   recargar( event ) {
@@ -62,7 +62,7 @@ export class Tab1Page implements OnInit {
     this.categoriaService.getCategorias()
       .subscribe( resp => {
         this.categorias.push( ...resp.categorias );
-      })
+      });
   }
 
   cambioCategoria( ){
@@ -79,7 +79,7 @@ export class Tab1Page implements OnInit {
       this.posts = [];
       return;
     }
-    this.buscando = true
+    this.buscando = true;
     this.postService.buscarPosts( valor )
       .subscribe( resp => {
         this.posts = resp['results'];

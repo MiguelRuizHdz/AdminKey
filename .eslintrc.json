@@ -35,7 +35,10 @@
             "prefix": "app",
             "style": "camelCase"
           }
-        ]
+        ],
+        "dot-notation": "off",
+        "@typescript-eslint/dot-notation": ["off"],
+        "no-underscore-dangle": "off"
       }
     },
     {

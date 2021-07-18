@@ -5,6 +5,8 @@ import { UiServiceService } from '../../services/ui-service.service';
 import { PassService } from '../../services/pass.service';
 import { MyModalPage } from '../../pages/my-modal/my-modal.page'
 import { PostsService } from '../../services/posts.service';
+import { Clipboard } from '@capacitor/clipboard';
+
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
@@ -21,7 +23,7 @@ export class PostComponent implements OnInit {
               public modalController: ModalController,
               private passService: PassService,
               private postsService: PostsService,
-              private uiService: UiServiceService) { }
+              private uiService: UiServiceService ) { }
 
   ngOnInit() {
     
@@ -42,8 +44,7 @@ export class PostComponent implements OnInit {
         {
           text: 'Borrar',
           icon: 'trash',
-          // Cambiar color a rojo
-          cssClass: 'danger',
+          cssClass: 'text-danger',
           handler: () => {
             this.borrar();
           }
@@ -114,14 +115,24 @@ export class PostComponent implements OnInit {
     }
   }
 
-  copy(){
-    this.post.passSecure = this.passService.decrypt(this.post.passSecure);
+  async copy(){
+    if( this.passwordToggleIcon == 'eye'){
+      this.post.passSecure = this.passService.decrypt(this.post.passSecure);
+      this.passwordToggleIcon = 'eye-off'
+    }
     const textToCopy = this.post.passSecure;
-    navigator.clipboard.writeText(textToCopy)
+    // Navegador
+    // navigator.clipboard.writeText(textToCopy)
+    //   .then(() => { this.uiService.presentToast('Se ha copiado al portapapeles correctamente'); })
+    //   .catch((error) => { this.uiService.alertaInformativa(`Fallo al copiar ${error}`) })
+    //Android Capacitor
+    await Clipboard.write({string: textToCopy})
       .then(() => { this.uiService.presentToast('Se ha copiado al portapapeles correctamente'); })
-      .catch((error) => { this.uiService.alertaInformativa(`Fallo al copiar ${error}`) })
-      this.post.passSecure = this.passService.encrypt(this.post.passSecure);
-    
+      .catch((error) => { this.uiService.alertaInformativa(`Fallo al copiar ${error}`) });
+    // if( this.passwordToggleIcon == 'eye-off'){
+    //   this.post.passSecure = this.passService.encrypt(this.post.passSecure);
+    //   this.passwordToggleIcon = 'eye'
+    // }
   }
 
 }

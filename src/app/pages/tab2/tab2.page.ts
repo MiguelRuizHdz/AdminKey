@@ -5,6 +5,7 @@ import { CategoriasService } from '../../services/categorias.service';
 import { PassService } from '../../services/pass.service';
 import { PostsService } from '../../services/posts.service';
 import { UiServiceService } from '../../services/ui-service.service';
+import { Clipboard } from '@capacitor/clipboard';
 
 @Component({
   selector: 'app-tab2',
@@ -78,11 +79,11 @@ export class Tab2Page  implements OnInit {
   ];
 
   postCrear: Post = {
-    categoria: '60999ddadf65b347901f8272',
+    categoria: '60aab9dce4ff6800153e965e',
     imagen: 'amazon.png',
-    cuenta: 'test1@test.com',
-    passSecure: '123456',
-    descripcion: 'Test 1',
+    cuenta: '',
+    passSecure: '',
+    descripcion: '',
   };
   showPassword = false;
   passwordToggleIcon = 'eye';
@@ -100,36 +101,53 @@ export class Tab2Page  implements OnInit {
     this.categoriaService.getCategorias()
       .subscribe( resp => {
         this.categorias.push( ...resp.categorias );
-      })
+      });
   }
 
   togglePassword(): void{
     this.showPassword = !this.showPassword;
-    if( this.passwordToggleIcon == 'eye'){
-      this.passwordToggleIcon = 'eye-off'
+    if( this.passwordToggleIcon === 'eye'){
+      this.passwordToggleIcon = 'eye-off';
     } else {
-      this.passwordToggleIcon = 'eye'
+      this.passwordToggleIcon = 'eye';
     }
   }
 
-  copy(){
+  async copy(){
     const textToCopy = this.postCrear.passSecure;
-    navigator.clipboard.writeText(textToCopy)
+    // Navegador
+    // navigator.clipboard.writeText(textToCopy)
+    //   .then(() => { this.uiService.presentToast('Se ha copiado al portapapeles correctamente'); })
+    //   .catch((error) => { this.uiService.alertaInformativa(`Fallo al copiar ${error}`) })
+    //Android
+    // this.clipboard.copy(textToCopy)
+    //   .then(() => { this.uiService.presentToast('Se ha copiado al portapapeles correctamente'); })
+    //   .catch((error) => { this.uiService.alertaInformativa(`Fallo al copiar ${error}`) });
+    //Android Capacitor
+    // eslint-disable-next-line id-blacklist
+    await Clipboard.write({string: textToCopy})
       .then(() => { this.uiService.presentToast('Se ha copiado al portapapeles correctamente'); })
-      .catch((error) => { this.uiService.alertaInformativa(`Fallo al copiar ${error}`) })
+      .catch((error) => { this.uiService.alertaInformativa(`Fallo al copiar ${error}`); });
   }
 
   async genPass(){
-    var passGen = await this.passService.getPass();
+    const passGen = await this.passService.getPass();
     this.postCrear.passSecure = this.passService.finalpass;
   }
 
   async crearCuenta(){
+
+    if( this.postCrear.categoria === '' || this.postCrear.imagen  === ''
+      || this.postCrear.passSecure  === '' || this.postCrear.descripcion  === '' || this.postCrear.cuenta === ''){
+      console.log(this.postCrear);
+      this.uiService.alertaInformativa('Llene todos los campos');
+      return;
+    }
     const creado = await this.postsService.crearPost( this.postCrear );
 
     this.postCrear = {
-      categoria: '',
-      imagen: '',
+      categoria: '60aab9dce4ff6800153e965e',
+      imagen: 'amazon.png',
       cuenta: '',
       passSecure: '',
       descripcion: '',
@@ -138,5 +156,5 @@ export class Tab2Page  implements OnInit {
     this.route.navigateByUrl('/main/tabs/tab1');
 
   }
-  
+
 }

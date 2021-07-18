@@ -20,14 +20,14 @@ export class LoginPage implements OnInit {
   passwordToggleIcon = 'eye';
 
   loginUser = {
-    email: 'test1@test.com',
-    password: '123456'
+    email: '',
+    password: ''
   };
 
   registerUser: Usuario = {
-    email: 'test2@test.com',
-    password: '123456',
-    nombre: 'Test 2',
+    email: '',
+    password: '',
+    nombre: '',
   };
 
   constructor( private usuarioSerice: UsuarioService,
@@ -42,16 +42,16 @@ export class LoginPage implements OnInit {
 
   togglePassword(): void{
     this.showPassword = !this.showPassword;
-    if( this.passwordToggleIcon == 'eye'){
-      this.passwordToggleIcon = 'eye-off'
+    if( this.passwordToggleIcon === 'eye'){
+      this.passwordToggleIcon = 'eye-off';
     } else {
-      this.passwordToggleIcon = 'eye'
+      this.passwordToggleIcon = 'eye';
     }
   }
 
   segmentChanged(ev) {
     const valorSegmento = ev.detail.value;
-    if(valorSegmento=='login'){
+    if( valorSegmento==='login' ){
       this.slides.lockSwipes( false );
       this.slides.slideTo(0);
       this.slides.lockSwipes( true );
@@ -64,7 +64,10 @@ export class LoginPage implements OnInit {
 
   async login( fLogin: NgForm ){
 
-    if ( fLogin.invalid ) { return; }
+    if ( fLogin.invalid ) {
+      this.uiService.alertaInformativa('Llene todos los campos correctamente');
+      return;
+    }
 
     const valido = await this.usuarioSerice.login( this.loginUser.email, this.loginUser.password );
 
@@ -96,7 +99,7 @@ export class LoginPage implements OnInit {
   }
 
   async genPass(){
-    var passGen = await this.passService.getPass();
+    const passGen = await this.passService.getPass();
     this.registerUser.password = this.passService.finalpass;
   }
 }

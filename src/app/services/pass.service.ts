@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod';
 const URL =  environment.url;
+const SECRETKEY = environment.secretKey;
 import * as CryptoJS from 'crypto-js';
 
 @Injectable({
@@ -9,10 +10,10 @@ import * as CryptoJS from 'crypto-js';
 })
 export class PassService {
 
-  private  secretKey: string = "thisismyuniqueseedy18hy6";
-  private encryptedData: string = ""
-  private decryptedData: string = ""
   finalpass: string;
+  private secretKey: string = SECRETKEY;
+  private encryptedData: string;
+  private decryptedData: string;
 
   constructor( private http: HttpClient) { }
 
@@ -20,8 +21,8 @@ export class PassService {
     return new Promise( resolve => {
       this.http.get(`${ URL }/obt/ps`)
         .subscribe(async resp => {
-          if ( resp['ok']) {
-            this.finalpass=resp['pass'];
+          if ( resp['ok'] ) {
+            this.finalpass= resp['pass'];
             resolve( true );
           } else {
             this.finalpass = null;
@@ -31,11 +32,11 @@ export class PassService {
     });
   };
 
-  encrypt(data:any):string {
-    return this.encryptedData = CryptoJS.AES.encrypt( data,  this.secretKey ).toString();
+  encrypt(data: any): string {
+    return this.encryptedData = CryptoJS.AES.encrypt( data, this.secretKey ).toString();
   }
 
-  decrypt( data:any ):string {
+  decrypt( data: any ): string {
     return this.decryptedData = CryptoJS.AES.decrypt( data, this.secretKey).toString(CryptoJS.enc.Utf8);
   }
 }

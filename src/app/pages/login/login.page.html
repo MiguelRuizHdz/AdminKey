@@ -53,26 +53,29 @@
                         <ion-col>
                             <ion-list>
                                 <ion-card>
+                                    <span *ngIf=" fRegistro.submitted  && fRegistro.controls['nombre'].errors" class="text-danger">El nombre debe de contener solo letras.</span>
                                     <ion-item>
                                         <ion-label>Nombre: </ion-label>
 
-                                        <ion-input name="nombre" type="text" placeholder="Nombre" [(ngModel)]="registerUser.nombre" required="required"></ion-input>
+                                        <ion-input name="nombre" type="text" placeholder="Nombre" [(ngModel)]="registerUser.nombre" pattern="([A-Za-zñÑáéíóúÁÉÍÓÚ\s]{2,35})" required="required"></ion-input>
                                     </ion-item>
                                 </ion-card>
 
                                 <ion-card>
+                                    <span *ngIf=" fRegistro.submitted  && fRegistro.controls['email'].errors" class="text-danger">El correo debe ser valido</span>
                                     <ion-item>
-                                        <ion-label>Email: </ion-label>
+                                        <ion-label>Correo: </ion-label>
 
-                                        <ion-input name="email" type="email" placeholder="Email" [(ngModel)]="registerUser.email" required="required"></ion-input>
+                                        <ion-input name="email" type="email" placeholder="Correo" [(ngModel)]="registerUser.email" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required="required"></ion-input>
                                     </ion-item>
                                 </ion-card>
 
                                 <ion-card>
+                                    <span *ngIf=" fRegistro.submitted  && fRegistro.controls['password'].errors" class="text-danger">La contraseña debe tener mínimo 8 caracteres</span>
                                     <ion-item>
-                                        <ion-label>Password: </ion-label>
+                                        <ion-label>Contraseña: </ion-label>
 
-                                        <ion-input name="password" [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" [(ngModel)]="registerUser.password" required="required"></ion-input>
+                                        <ion-input name="password" [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" [(ngModel)]="registerUser.password" minlength="8" required="required"></ion-input>
                                         <ion-icon slot="end" [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
 
                                     </ion-item>

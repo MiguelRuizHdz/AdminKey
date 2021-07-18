@@ -1,6 +1,6 @@
 {
-    "appId": "io.ionic.starter",
-    "appName": "adminkey",
+    "appId": "com.adminkey",
+    "appName": "AdminKey",
     "webDir": "www",
     "bundledWebRuntime": false
 }
