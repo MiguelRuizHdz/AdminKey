@@ -17,16 +17,16 @@ export class UsuarioService {
 
   constructor( private http: HttpClient,
                private storage: Storage,
-               private navCtrl: NavController ) { 
+               private navCtrl: NavController ) {
     this.storage.create();
   }
-  
+
   login( email: string, password: string ) {
 
     const data = { email, password };
 
     return new Promise( resolve => {
-      
+
       this.http.post(`${ URL }/user/login`, data)
         .subscribe( async resp => {
           if ( resp['ok']) {
@@ -39,21 +39,21 @@ export class UsuarioService {
           }
         });
 
-    }); 
+    });
 
   };
 
   logout() {
     this.token = null;
     this.usuario = null;
-    this.storage.clear(),
+    this.storage.clear();
     this.navCtrl.navigateRoot('/login', { animated: true});
   }
 
   registro( usuario: Usuario) {
 
     return new Promise( resolve => {
-  
+
       this.http.post(`${ URL }/user/create`, usuario )
           .subscribe( async resp => {
             if ( resp['ok']) {
@@ -64,7 +64,6 @@ export class UsuarioService {
               this.storage.clear();
               resolve( false );
             }
-            
           });
     });
   };
@@ -109,7 +108,7 @@ export class UsuarioService {
 
       this.http.get(`${ URL }/user/`, { headers })
           .subscribe( resp => {
-  
+
             if ( resp['ok']){
               this.usuario =  resp['usuario'];
               resolve(true);
@@ -118,13 +117,13 @@ export class UsuarioService {
               resolve(false);
             }
 
-          })
+          });
 
     });
   }
 
   actualizarUsuario( usuario: Usuario) {
-    
+
     const headers =  new HttpHeaders({
       'x-token': this.token
     });
@@ -139,7 +138,7 @@ export class UsuarioService {
             } else {
               resolve(false);
             }
-  
+
           });
 
     });
