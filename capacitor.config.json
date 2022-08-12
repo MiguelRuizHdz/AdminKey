@@ -1,6 +1,10 @@
-{
-    "appId": "com.adminkey",
-    "appName": "AdminKey",
-    "webDir": "www",
-    "bundledWebRuntime": false
-}
+import { CapacitorConfig } from '@capacitor/cli';
+
+const config: CapacitorConfig = {
+  appId: 'com.adminkey',
+  appName: 'AdminKey',
+  webDir: 'www',
+  bundledWebRuntime: false
+};
+
+export default config;
