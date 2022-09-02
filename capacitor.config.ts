@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.adminkey',
-  appName: 'AdminKey',
+  appId: 'com.miguelruizhdz',
+  appName: 'adminkey',
   webDir: 'www',
   bundledWebRuntime: false
 };
