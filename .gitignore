@@ -31,5 +31,6 @@ npm-debug.log*
 /plugins
 /www
 /android
+/ios
 src/environments/environment.prod.ts
 src/environments/environment.ts
